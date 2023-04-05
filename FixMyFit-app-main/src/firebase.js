@@ -8,13 +8,13 @@ import { getAuth, onAuthStateChanged, updateProfile } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyAwH_aEHH3svpKPRkGe5uPSH6Wjh0ola_w",
-    authDomain: "fixmyfit-abb80.firebaseapp.com",
-    projectId: "fixmyfit-abb80",
-    storageBucket: "fixmyfit-abb80.appspot.com",
-    messagingSenderId: "834596917251",
-    appId: "1:834596917251:web:aca8de9faf3765856fbe36"
-  };
+  apiKey: "AIzaSyCulHGbyznAiEb7meJrOnBAsD342SQ4bbA",
+  authDomain: "fixmyfit-e3b43.firebaseapp.com",
+  projectId: "fixmyfit-e3b43",
+  storageBucket: "fixmyfit-e3b43.appspot.com",
+  messagingSenderId: "633926920012",
+  appId: "1:633926920012:web:b145606cf08bb2f2c911e9"
+};
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
