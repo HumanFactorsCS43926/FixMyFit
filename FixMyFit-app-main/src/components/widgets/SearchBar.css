@@ -1,0 +1,31 @@
+.searchInputs{
+    margin-top: 100px;
+    display: block;
+    text-align: center;
+}
+
+.search input{
+    background-color: white;
+    border: 0;
+    border-radius: 10px;
+    font-size: 18px;
+    padding: 15px;
+    height: 40px;
+    width: 550px;
+}
+
+.searchIcon{
+    height: 40px;
+    width: 50px;
+    background-color: white;
+    display: block;
+    place-items: center;
+}
+
+input:focus{
+    outline: none;
+}
+
+.searchIcon svg{
+    font-size: 20px;
+}
