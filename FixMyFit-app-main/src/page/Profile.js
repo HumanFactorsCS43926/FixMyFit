@@ -1,5 +1,8 @@
+import { updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useAuth, upload } from "../firebase";
+import { db } from '../firebase';
+import { doc, setDoc } from 'firebase/firestore';
 
 function Profile(){
     const currentUser = useAuth();
@@ -11,6 +14,9 @@ function Profile(){
         if (e.target.files[0]) {
           setPhoto(e.target.files[0])
         }
+        updateDoc(doc(db, "users", currentUser.uid),{
+          photoURL: currentUser.photoURL
+        })
       }
     
       function handleClick() {
@@ -22,7 +28,6 @@ function Profile(){
           setPhotoURL(currentUser.photoURL);
         }
       }, [currentUser])
-    
     return(
       <div className="fields">
         <input type="file" onChange={handleChange} />
