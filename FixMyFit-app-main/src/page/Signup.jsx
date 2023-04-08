@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 import Text from '../components/elements/Text';
 import { NavLink, useNavigate } from 'react-router-dom';
-import {  createUserWithEmailAndPassword  } from 'firebase/auth';
+import {  getAuth, createUserWithEmailAndPassword  } from 'firebase/auth';
 import { auth } from '../firebase';
+import { db } from '../firebase';
+import { doc, setDoc } from 'firebase/firestore';
 
 const Signup = () => {
     const navigate = useNavigate();
@@ -14,23 +16,33 @@ const Signup = () => {
   
     const onSubmit = async (e) => {
       e.preventDefault()
-      
-      await createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            // Signed in 
-            const user = userCredential.user;
-            console.log(user);
+        try{
+            const res = await createUserWithEmailAndPassword(auth, email, password);
             navigate("/login")
-            // ...
-        })
-        .catch((error) => {
+            /*await createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed in 
+                const user = userCredential.user;
+                console.log(user);
+                navigate("/login")
+                // ...
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorCode, errorMessage);
+                // ..
+            });*/
+            await setDoc(doc(db, "users", res.user.uid),{
+                firstName : {firstName},
+                lastname : {lastName},
+                email : {email}
+            })
+        }catch (error) {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log(errorCode, errorMessage);
-            // ..
-        });
-
-    
+        }
     }
   
   
