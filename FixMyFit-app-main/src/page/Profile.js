@@ -14,6 +14,9 @@ function Profile(){
         if (e.target.files[0]) {
           setPhoto(e.target.files[0])
         }
+        updateDoc(doc(db, "users", currentUser.uid),{
+          photoURL: currentUser.photoURL
+        })
       }
     
       function handleClick() {
