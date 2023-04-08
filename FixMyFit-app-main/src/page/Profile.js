@@ -1,5 +1,8 @@
+import { updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useAuth, upload } from "../firebase";
+import { db } from '../firebase';
+import { doc, setDoc } from 'firebase/firestore';
 
 function Profile(){
     const currentUser = useAuth();
@@ -22,6 +25,10 @@ function Profile(){
           setPhotoURL(currentUser.photoURL);
         }
       }, [currentUser])
+
+      updateDoc(doc(db, "users", currentUser.uid),{
+        photoURL: currentUser.photoURL
+    })
     
     return(
       <div className="fields">
