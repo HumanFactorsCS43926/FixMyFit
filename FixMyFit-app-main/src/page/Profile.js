@@ -28,11 +28,6 @@ function Profile(){
           setPhotoURL(currentUser.photoURL);
         }
       }, [currentUser])
-
-      updateDoc(doc(db, "users", currentUser.uid),{
-        photoURL: currentUser.photoURL
-    })
-    
     return(
       <div className="fields">
         <input type="file" onChange={handleChange} />
