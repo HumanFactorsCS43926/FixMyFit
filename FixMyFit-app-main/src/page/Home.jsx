@@ -3,7 +3,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../firebase'; 
 import Profile from './Profile';
-
+import Dropzone from './dropzone';
+import Posts from './Posts';
 const Home = () => {
     const [ openTaskInput, setOpenTaskInput ] = useState(false);
     const [open, setOpen] = useState(false);
@@ -45,9 +46,14 @@ const Home = () => {
 
      
         return (
-            <div>
-                <Profile />
-            </div>
+            <div className="flex">
+              <div className='p-5'>
+                <Dropzone/>
+              </div>
+              <div className="p-5 bg-gray-100 min-h-screen w-full">
+                <Posts/>
+              </div>
+            </div>
         );
 
 
