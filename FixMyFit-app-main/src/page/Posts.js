@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {  collection, onSnapshot,orderBy,query } from 'firebase/firestore';
 import { db } from "../firebase";
-import Image from 'next/image'
 
 const Posts = () => {
     const[posts, setPosts] = useState([])
@@ -15,12 +14,20 @@ const Posts = () => {
         return unsubscribe
     },[])
 
-    return(
-        <div>{
-            posts.map(post=><div key={post.id}>
-                <div className='text-lg'>{post.post}</div>
-            </div>)
-        }</div>
-    )
-}
+  
+
+    return (
+        <div>
+          {posts.map((post) => (
+            <div key={post.id}>
+              <div className='text-lg'>{post.post}</div>
+      
+              {post.images.map((image, index) => (
+                <img key={index}  src={image} width={"200px"} />
+              ))}
+            </div>
+          ))}
+        </div>
+      )
+              }
  export default Posts;
