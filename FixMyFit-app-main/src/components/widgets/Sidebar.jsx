@@ -65,7 +65,7 @@ const Sidebar = () => {
                     }     
                 >
                     <li className="p-4">
-                        Notes
+                        Create Post +
                     </li>                    
                 </NavLink>
                 <nav className="flex justify-between pt-8">
