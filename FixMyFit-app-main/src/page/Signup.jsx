@@ -9,6 +9,7 @@ import { doc, setDoc } from 'firebase/firestore';
 const Signup = () => {
     const navigate = useNavigate();
 
+    const [userName, setUserName] = useState('')
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
@@ -34,6 +35,7 @@ const Signup = () => {
                 // ..
             });*/
             await setDoc(doc(db, "users", res.user.uid),{
+                userName: {userName},
                 firstName : {firstName},
                 lastname : {lastName},
                 email : {email}
@@ -65,6 +67,22 @@ const Signup = () => {
                     
                     <form onSubmit={onSubmit} className="mt-8 space-y-6" >                    
                         <div className=" space-y-6 rounded-md shadow-sm">
+                            <div>
+                                <label htmlFor="email-address" className="sr-only">
+                                    Username
+                                </label>
+                                <input
+                                    label="Username"
+                                    value={userName}
+                                    onChange={(e) => setUserName(e.target.value)}                                    
+                                    name="username"
+                                    type="text"                                    
+                                    required                                
+                                    className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                    placeholder="User name"                                   
+                                />
+                            </div>
+
                             <div>
                                 <label htmlFor="email-address" className="sr-only">
                                     First name
