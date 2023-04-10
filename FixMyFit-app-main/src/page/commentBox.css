@@ -1,0 +1,26 @@
+.comment-box{
+        width: 100%;
+        height: 40px;
+        padding: 12px;
+        border: none;
+        border-radius: 20px;
+        background-color: #F2F3F5;
+        font-size: 14px;
+        color: #333333;
+        box-shadow: 0 0 4px rgba(0,0,0,0.1);
+    }
+.comment-box:focus {
+        background-color: #FFFFFF;
+      }
+      
+.comment-box button {
+        background-color: #0095F6;
+        color: #FFFFFF;
+        font-size: 14px;
+        font-weight: 600;
+        border: none;
+        border-radius: 20px;
+        padding: 10px 16px;
+        margin-left: 10px;
+        cursor: pointer;
+}
