@@ -8,7 +8,7 @@ import './commentBox.css';
 const Posts = () => {
     const[posts, setPosts] = useState([])
     const currentUser = useAuth();
-    const postComment = useRef(null);
+    const postComment = useRef();
     const [userData, setUserData] = useState(null);
     useEffect(()=>{
         const collectionRef = collection(db,"post")
@@ -29,12 +29,11 @@ const Posts = () => {
     },[])
 
     const uploadComment = async (postId) => {
-      const commentRef = collection(db,'post',postId)
-      await addDoc(collection(commentRef,"comments", currentUser.uid),{
+      const commentRef = collection(db,'post',postId, "comments")
+      await addDoc(commentRef,{
         comment : postComment.current.value,
-        username : currentUser.userName
-      })
-      postComment.current.value='';
+        username: currentUser.displayName,
+      });
   }
 
   
@@ -52,7 +51,7 @@ const Posts = () => {
               </div>
               <div> <span className='text-base p font-bold'>{post.userName?.userName}</span>: {post.post} </div>
 
-              <input class="comment-box" ref={postComment} type="text" placeholder='add a comment...'/>
+              <input className="comment-box" ref={postComment} type="text" placeholder='add a comment...'/>
 
               <button onClick={() => uploadComment(post.id)}>post</button>
 
