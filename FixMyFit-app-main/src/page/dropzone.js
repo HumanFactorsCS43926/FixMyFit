@@ -109,6 +109,9 @@ export default function Dropzone() {
   ))
 
   const isUploadDisabled = selectedImages.length === 0;
+  useEffect(() => {
+    getUserData();
+  }, [currentUser]);
 
   return(
     <div>
