@@ -13,6 +13,7 @@ import {Routes, Route} from 'react-router-dom';
 import SearchBar from './components/widgets/SearchBar';
 import Layout from './components/widgets/Layout';
 import { BrowserRouter as Router } from 'react-router-dom';
+import Questionnaire from './page/Questionnaire';
 
 
 function App() {
@@ -56,6 +57,7 @@ function App() {
               
               <Route path="/" element={<Signup/>}/>
               <Route path="/login" element={<Login/>}/>
+              <Route path="/questionnaire" element={<Questionnaire/>}/>
             </Routes>          
           </div>
         </section>

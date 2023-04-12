@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 import Text from '../components/elements/Text';
-import {  signInWithEmailAndPassword   } from 'firebase/auth';
-import { auth } from '../firebase';
+import {  signInWithEmailAndPassword, getAuth } from 'firebase/auth';
+import { auth, db } from '../firebase';
 import { NavLink, useNavigate } from 'react-router-dom'
+import { doc, getDoc } from "firebase/firestore";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -15,8 +16,18 @@ const Login = () => {
         .then((userCredential) => {
             // Signed in 
             const user = userCredential.user;
-            navigate("/home")
-            console.log(user);
+            console.log(user.uid);
+            var docRef = doc(db, "users", user.uid);
+            var qRef = doc(docRef, "questionnaires", "form1");
+            getDoc(qRef).then((doc) => {
+                if (doc.exists()) {
+                    navigate('/home');
+                    console.log("doc exists");
+                } else {
+                    navigate('/questionnaire');
+                    console.log("doc doesn't exist");
+                }
+            });
         })
         .catch((error) => {
             const errorCode = error.code;
