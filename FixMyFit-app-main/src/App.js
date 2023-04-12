@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 
  
 import Home from './page/Home';
+import Dropzone from './page/dropzone';
 import SearchPage from './page/SearchPage';
 import Notes from './page/Notes';
 import Signup from './page/Signup';
@@ -49,7 +50,7 @@ function App() {
                   path="/notes"
                   element={
                     <Layout>
-                      < Notes />
+                      <Dropzone/>
                     </Layout>
                   
                   }
