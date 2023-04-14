@@ -40,6 +40,19 @@ const Sidebar = () => {
                FixMyFit
             </Text>
 
+            <NavLink 
+                    to="/ProfilePage"
+                    className={({isActive}) => 
+                        isActive? "bg-secondary w-full block border-l-2 border-l-tertiary mr-2 py-3  text-sm"
+                        : 
+                        "mr-2 text-sm py-3 "
+                    }    
+                >                    
+                    <li className="p-4 mx-4 ">
+                        Profile
+                    </li>
+                </NavLink>
+
                 <NavLink 
                     to="/SearchPage"
                     className={({isActive}) => 

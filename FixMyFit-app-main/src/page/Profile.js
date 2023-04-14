@@ -2,7 +2,8 @@ import { updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useAuth, upload } from "../firebase";
 import { db } from '../firebase';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc } from 'firebase/firestore';
+import './commentBox.css';
 
 function Profile(){
     const currentUser = useAuth();
@@ -30,10 +31,14 @@ function Profile(){
       }, [currentUser])
     return(
       <div className="fields">
-        <input type="file" onChange={handleChange} />
-        <button disabled={loading || !photo} onClick={handleClick}>Upload</button>
-        <img src={photoURL} alt="Avatar" className="avatar" />
-      </div>
+  <div className="pt-5 pb-2 mt-80" style={{ display: 'flex', flexDirection: 'column' }}>
+    <img src={photoURL} alt="Avatar" className="avatar" style={{ marginBottom: '10px' }} />
+    <input type="file" onChange={handleChange} />
+  </div>
+  <button disabled={loading || !photo} onClick={handleClick}>Upload</button>
+</div>
+
+
     )
   
 }
