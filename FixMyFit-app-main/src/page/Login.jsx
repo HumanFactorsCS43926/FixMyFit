@@ -19,8 +19,7 @@ const Login = () => {
             // Signed in 
             const user = userCredential.user;
             console.log(user.uid);
-            var docRef = doc(db, "users", user.uid);
-            var qRef = doc(docRef, "questionnaires", "form1");
+            var qRef = doc(db, "questionnaires", user.uid);
             getDoc(qRef).then((doc) => {
                 if (doc.exists()) {
                     navigate('/home');

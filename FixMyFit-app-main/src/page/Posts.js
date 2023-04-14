@@ -1,11 +1,13 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useAuth } from '../firebase';
-import { updateDoc,serverTimestamp,getDoc,doc, addDoc, collection, onSnapshot, orderBy, query } from 'firebase/firestore';
+import { updateDoc,serverTimestamp,getDoc,doc, addDoc, collection, onSnapshot, orderBy, query, increment } from 'firebase/firestore';
 import { db } from '../firebase';
 import moment from 'moment';
 import './commentBox.css';
+import './likeButton.css';
 import AliceCarousel from 'react-alice-carousel';
 import "react-alice-carousel/lib/alice-carousel.css";
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 
 const Posts = () => {
@@ -16,6 +18,7 @@ const Posts = () => {
   const [userData, setUserData] = useState(null);
   const [commentSubscriptions, setCommentSubscriptions] = useState({});
   const [showComments, setShowComments] = useState({});
+  const [isLiked, setIsLiked] = useState(false);
 
   const getUserData = async () => {
     if (currentUser) {
@@ -34,7 +37,7 @@ const Posts = () => {
 
   useEffect(() => {
     const collectionRef = collection(db, 'post');
-    const q = query(collectionRef, orderBy('timestamp', 'desc'));
+    const q = query(collectionRef, orderBy('likes', 'desc'));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       setPosts(
         querySnapshot.docs.map((doc) => {
@@ -95,6 +98,63 @@ const Posts = () => {
     }));
   };
 
+  const updateLikes = async (postId, userId) => {
+    const postRef = doc(db, 'post', postId);
+    const postSnapshot = await getDoc(postRef);
+
+    if (!postSnapshot.exists()) {
+      throw new Error('Post does not exist');
+    }
+
+    const post = postSnapshot.data();
+    const likes = post.likes || 0;
+    const likers = post.likers || [];
+
+    if (likers.includes(userId)) {
+      throw new Error('User has already liked this post');
+    }
+
+    const updatedLikes = likes + 1;
+    const updatedLikers = [...likers, userId];
+
+    await updateDoc(postRef,{
+      likes : updatedLikes,
+      likers: updatedLikers
+    })
+
+    setPosts((prevPosts) =>
+      prevPosts.map((post) =>
+        post.id === postId ? { ...post, isLiked: !post.isLiked } : post
+      )
+    );
+
+  }
+
+  const updateCommentLikes = async (postId, commentId, userId) => {
+    const postRef = doc(db, 'post', postId, 'comments', commentId);
+    const postSnapshot = await getDoc(postRef);
+
+    if (!postSnapshot.exists()) {
+      throw new Error('Post does not exist');
+    }
+
+    const post = postSnapshot.data();
+    const likes = post.likes || 0;
+    const likers = post.likers || [];
+
+    if (likers.includes(userId)) {
+      throw new Error('User has already liked this post');
+    }
+
+    const updatedLikes = likes + 1;
+    const updatedLikers = [...likers, userId];
+
+    await updateDoc(postRef,{
+      likes : updatedLikes,
+      likers: updatedLikers
+    })
+  }
+
   useEffect(() => {
     getUserData();
 
@@ -106,7 +166,7 @@ const Posts = () => {
 
   return (
     <div >
-      {posts.map((post, index) => (
+      {posts.map((post, index) => ( 
         <div key={post.id} className='bg-white rounded-lg shadow-xl p-8   mb-4'style={{ marginLeft: "10%", width: 'auto', maxWidth: '500px' ,minWidth: '200px'}}>
           <div className='text-base font-bold'>{post.userName?.userName}</div>
           <AliceCarousel>
@@ -114,6 +174,10 @@ const Posts = () => {
               <img key={index} src={image} width={'auto'} />
             ))}
           </AliceCarousel>
+              <button className={post.isLiked ? 'button-like liked' : 'button-like'} onClick={() => updateLikes(post.id, currentUser.uid)}>
+                <icon className="fas fa-heart"></icon>  
+                <span>{post.likes}</span>
+              </button>
           <div>
             <span className='text-base p font-bold'>{post.userName?.userName}</span>: {post.post}
           </div>
@@ -144,6 +208,7 @@ const Posts = () => {
               <div>
                 <span className='text-base p font-bold'>{comment.username.userName}</span>: {comment.comment}
                 <p className='mt-3 text-xs text-right text-gray-400'>{moment(comment.timestamp).fromNow()}</p>
+                <button onClick={() => updateCommentLikes(post.id, comment.id, currentUser.uid)}>{comment.likes} like</button>
               </div>
             </div>
           ))}

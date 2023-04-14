@@ -1,4 +1,4 @@
-import Navbar from './Navbar';
+
 import Sidebar from './Sidebar';
 
 const Layout = ({children}) => {
@@ -7,13 +7,10 @@ const Layout = ({children}) => {
             <div className="fixed top-0 left-0 h-screen bg-sidebar w-auto">
                 < Sidebar />
             </div>
-
-            <Navbar/>
             <div className="pl-80 pr-4">
                 {children}
             </div>
         </section>
     )
 }
-
 export default Layout

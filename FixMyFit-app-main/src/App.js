@@ -1,18 +1,20 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 
  
 import Home from './page/Home';
 import Dropzone from './page/dropzone';
 import SearchPage from './page/SearchPage';
-import Notes from './page/Notes';
+//import Notes from './page/Notes';
 import Signup from './page/Signup';
 import Login from './page/Login';
+import Profile from './page/Profile';
 
 
 import {Routes, Route} from 'react-router-dom';
 // import Navbar from './components/widgets/Navbar';
 import SearchBar from './components/widgets/SearchBar';
 import Layout from './components/widgets/Layout';
+import ProfileLayout from './components/widgets/ProfileLayout';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Questionnaire from './page/Questionnaire';
 
@@ -25,6 +27,17 @@ function App() {
         <section>          
           <div>            
             <Routes>
+
+                <Route 
+                  path="/ProfilePage"
+                  element={
+                    <ProfileLayout>
+                      <Profile/>
+                      <Questionnaire/>
+                    </ProfileLayout>
+                  
+                  }
+                />
 
                 <Route 
                   path="/SearchPage"

@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import Text from '../components/elements/Text';
-import { NavLink, useNavigate } from 'react-router-dom';
-import {  getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
+import { onAuthStateChanged } from 'firebase/auth';
 import { db, auth } from '../firebase';
 import { doc, setDoc } from 'firebase/firestore';
-import Profile from './Profile';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -16,45 +17,71 @@ const Questionnaire = () => {
         setUserSex(event.target.value);
     }
 
+
+
     const onSubmit = async (e) => {
       e.preventDefault()
         try{
             onAuthStateChanged(auth, (user) => {
                 if (user) {
                     const userID = user.uid;
-                    const userRef = db.collection('users').doc(userID);
-                    const questionnaireRef = userRef.collection('questionnaires');
                     const formRef = document.getElementById("user-questionnaire");
-                    formRef.addEventListener("submit", function(event) {
-                    event.preventDefault();
+                    if(formRef.elements.sex.value ==="male"){
                     const formData = {
-                        sex: formRef.elements.sex.value,
-                        height: formRef.elements.height.value,
-                        weight: formRef.elements.weight.value,
-                        body_type: formRef.elements.bodytype.value,
-                        tshirt: formRef.elements.tshirt.value,
-                        dress_shirt: formRef.elements.dressshirt.value,
-                        pants: formRef.elements.pants.value,
-                        shorts: formRef.elements.shorts.value,
-                        shoes: formRef.elements.shoes.value,
-                        hat: formRef.elements.hat.value,
-                        coat: formRef.elements.coat.value,
-                        shirt: formRef.elements.shirt.value,
-                        jeans: formRef.elements.jeans.value,
-                        bottoms: formRef.elements.bottoms.value,
-                        dress: formRef.elements.dress.value,
-                        bra: formRef.elements.bra.value,
-                        work_frequency: formRef.elements.workfrequency.value,
-                        formal_frequency: formRef.elements.formalfrequency.value,
-                        casual_frequency: formRef.elements.casualfrequency.value,
-                        athletic_frequency: formRef.elements.athleticfrequency.value,
-                        social_frequency: formRef.elements.socialfrequency.value,
-                        styles: formRef.elements.styles.value,
-                        colors: formRef.elements.colors.value,
-                        brands: formRef.elements.brands.value,
+                      sex: formRef.elements.sex.value,
+                      height: formRef.elements.height.value,
+                      weight: formRef.elements.weight.value,
+                      body_type: formRef.elements.bodytype.value,
+                      tshirt: formRef.elements.tshirt.value,
+                      dress_shirt: formRef.elements.dressshirt.value,
+                      pants: formRef.elements.pants.value,
+                      shorts: formRef.elements.shorts.value,
+                      shoes: formRef.elements.shoes.value,
+                      hat: formRef.elements.hat.value,
+                      coat: formRef.elements.coat.value,
+                      work_frequency: formRef.elements.workfrequency.value,
+                      formal_frequency: formRef.elements.formalfrequency.value,
+                      casual_frequency: formRef.elements.casualfrequency.value,
+                      athletic_frequency: formRef.elements.athleticfrequency.value,
+                      social_frequency: formRef.elements.socialfrequency.value,
+                      styles: formRef.elements.styles.value,
+                      colors: formRef.elements.colors.value,
+                      brands: formRef.elements.brands.value,
+                    };
+                    console.log(formData);
+                    setDoc(doc(db, "questionnaires", userID), {
+                        formData: formData,
+                      });
+                }
+                    else{
+                        const formData = {
+                            sex: formRef.elements.sex.value,
+                            height: formRef.elements.height.value,
+                            weight: formRef.elements.weight.value,
+                            body_type: formRef.elements.bodytype.value,
+                            shirt: formRef.elements.shirt.value,
+                            jeans: formRef.elements.jeans.value,
+                            bottoms: formRef.elements.bottoms.value,
+                            dress: formRef.elements.dress.value,
+                            bra: formRef.elements.bra.value,
+                            shoes: formRef.elements.shoes.value,
+                            hat: formRef.elements.hat.value,
+                            work_frequency: formRef.elements.workfrequency.value,
+                            formal_frequency: formRef.elements.formalfrequency.value,
+                            casual_frequency: formRef.elements.casualfrequency.value,
+                            athletic_frequency: formRef.elements.athleticfrequency.value,
+                            social_frequency: formRef.elements.socialfrequency.value,
+                            styles: formRef.elements.styles.value,
+                            colors: formRef.elements.colors.value,
+                            brands: formRef.elements.brands.value,
+                          }
+                          console.log(formData);
+                    setDoc(doc(db, "questionnaires", userID), {
+                        formData: formData,
+                      });
                     }
-                    questionnaireRef.add(formData);
-                    })
+                    
+                      
                     navigate("/home")
                     // ...
                     console.log("uid", userID)
@@ -68,6 +95,18 @@ const Questionnaire = () => {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log(errorCode, errorMessage);
+            toast.error(errorMessage, {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                });
+            console.log(errorCode, errorMessage)
+            toast.clearWaitingQueue();
         }
     }
   
@@ -102,6 +141,7 @@ const Questionnaire = () => {
         `}
         </style>       
         <section>
+        <ToastContainer limit={1}/>
             <div className="flex h-screen items-center justify-center px-4 sm:px-6 lg:px-8">
                 <div className="w-full max-w-md space-y-8">
                     <div>
@@ -178,7 +218,7 @@ const Questionnaire = () => {
                                     </div>
                                 </>
                             }
-                            {userSex == 'female' && 
+                            {userSex ==='female' && 
                                 <>
                                     <div id="female-body">
                                         <label htmlFor="bodytype">
@@ -209,6 +249,7 @@ const Questionnaire = () => {
                                             <input 
                                                 name="tshirt" 
                                                 type="text" 
+                                                required  
                                                 placeholder="Ex. large"
                                                 className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                                             />
@@ -278,6 +319,7 @@ const Questionnaire = () => {
                                             <input 
                                                 name="shirt" 
                                                 type="text" 
+                                                required  
                                                 placeholder="Ex. Small 2-4"
                                                 className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                                             />
@@ -423,10 +465,11 @@ const Questionnaire = () => {
                                     htmlFor="classic" 
                                     style={{display: "block"}}>
                                     <input 
+
                                         style={{display: "inline-block"}}
                                         type="checkbox" 
                                         id='classic' 
-                                        name='styles[]' 
+                                        name='styles' 
                                         value="classic" /> Classic
                                 </label>
                                 <label 
@@ -436,7 +479,7 @@ const Questionnaire = () => {
                                         style={{display: "inline-block"}}
                                         type="checkbox" 
                                         id='casual' 
-                                        name='styles[]' 
+                                        name='styles' 
                                         value="casual" /> Casual
                                 </label>
                                 <label 
@@ -446,7 +489,7 @@ const Questionnaire = () => {
                                         style={{display: "inline-block"}}
                                         type="checkbox" 
                                         id='sporty' 
-                                        name='styles[]' 
+                                        name='styles' 
                                         value="sporty" /> Sporty
                                 </label>
                                 <label 
@@ -456,7 +499,7 @@ const Questionnaire = () => {
                                         style={{display: "inline-block"}}
                                         type="checkbox" 
                                         id='bohemian' 
-                                        name='styles[]' 
+                                        name='styles' 
                                         value="bohemian" /> Bohemian
                                 </label>
                                 <label 
@@ -466,7 +509,7 @@ const Questionnaire = () => {
                                         style={{display: "inline-block"}}
                                         type="checkbox" 
                                         id='vintage' 
-                                        name='styles[]' 
+                                        name='styles' 
                                         value="vintage" /> Vintage
                                 </label>
                                 <label 
@@ -476,7 +519,7 @@ const Questionnaire = () => {
                                         style={{display: "inline-block"}}
                                         type="checkbox" 
                                         id='preppy' 
-                                        name='styles[]' 
+                                        name='styles' 
                                         value="preppy" /> Preppy
                                 </label>
                                 <label 
@@ -486,7 +529,7 @@ const Questionnaire = () => {
                                         style={{display: "inline-block"}}
                                         type="checkbox" 
                                         id='hipster' 
-                                        name='styles[]' 
+                                        name='styles' 
                                         value="hipster" /> Hipster
                                 </label>
                                 <label 
@@ -496,7 +539,7 @@ const Questionnaire = () => {
                                         style={{display: "inline-block"}}
                                         type="checkbox" 
                                         id='minimalist' 
-                                        name='styles[]' 
+                                        name='styles' 
                                         value="minimalist" /> Minimalist
                                 </label>
                                 <label 
@@ -506,14 +549,14 @@ const Questionnaire = () => {
                                         style={{display: "inline-block"}}
                                         type="checkbox" 
                                         id='streetwear' 
-                                        name='styles[]' 
+                                        name='styles' 
                                         value="streetwear" /> Streetwear
                                 </label>
                                 <label htmlFor="other">
                                     <input 
                                         type="text" 
                                         id='other' 
-                                        name='styles[]' 
+                                        name='styles' 
                                         placeholder='other'/> Other
                                 </label>  
                             </div>
@@ -527,7 +570,7 @@ const Questionnaire = () => {
                                         style={{display: "inline-block"}}
                                         type="checkbox" 
                                         id='white' 
-                                        name='colors[]' 
+                                        name='colors' 
                                         value="white" /> White
                                 </label>
                                 <label 
@@ -537,7 +580,7 @@ const Questionnaire = () => {
                                         style={{display: "inline-block"}} 
                                         type="checkbox" 
                                         id='black' 
-                                        name='colors[]' 
+                                        name='colors' 
                                         value="black" /> Black
                                 </label>
                                 <label 
@@ -547,7 +590,7 @@ const Questionnaire = () => {
                                         style={{display: "inline-block"}} 
                                         type="checkbox" 
                                         id='gray' 
-                                        name='colors[]' 
+                                        name='colors' 
                                         value="gray" /> Gray
                                 </label>
                                 <label 
@@ -557,7 +600,7 @@ const Questionnaire = () => {
                                         style={{display: "inline-block"}} 
                                         type="checkbox" 
                                         id='navy' 
-                                        name='colors[]' 
+                                        name='colors' 
                                         value="navy" /> Navy Blue
                                 </label>
                                 <label 
@@ -567,7 +610,7 @@ const Questionnaire = () => {
                                         style={{display: "inline-block"}} 
                                         type="checkbox" 
                                         id='red' 
-                                        name='colors[]' 
+                                        name='colors' 
                                         value="red" /> Red
                                 </label>
                                 <label 
@@ -577,7 +620,7 @@ const Questionnaire = () => {
                                         style={{display: "inline-block"}} 
                                         type="checkbox" 
                                         id='green' 
-                                        name='colors[]' 
+                                        name='colors' 
                                         value="green" /> Green
                                 </label>
                                 <label 
@@ -587,7 +630,7 @@ const Questionnaire = () => {
                                         style={{display: "inline-block"}} 
                                         type="checkbox" 
                                         id='blue' 
-                                        name='colors[]' 
+                                        name='colors' 
                                         value="blue" /> Blue
                                 </label>
                                 <label 
@@ -597,7 +640,7 @@ const Questionnaire = () => {
                                         style={{display: "inline-block"}} 
                                         type="checkbox" 
                                         id='brown' 
-                                        name='colors[]' 
+                                        name='colors' 
                                         value="brown" /> Brown
                                 </label>
                                 <label 
@@ -607,7 +650,7 @@ const Questionnaire = () => {
                                         style={{display: "inline-block"}} 
                                         type="checkbox" 
                                         id='pink' 
-                                        name='colors[]' 
+                                        name='colors' 
                                         value="pink" /> Pink
                                 </label>
                                 <label 
@@ -617,28 +660,28 @@ const Questionnaire = () => {
                                         style={{display: "inline-block"}} 
                                         type="checkbox" 
                                         id='yellow' 
-                                        name='colors[]' 
+                                        name='colors' 
                                         value="yellow" /> Yellow
                                 </label>
                                 <label htmlFor="other-color-1">
                                     <input 
                                         type="text" 
                                         id='other-color-1' 
-                                        name='colors[]' 
+                                        name='colors' 
                                         /> Other
                                 </label>
                                 <label htmlFor="other-color-2">
                                     <input 
                                         type="text" 
                                         id='other-color-2' 
-                                        name='colors[]' 
+                                        name='colors' 
                                         /> Other
                                 </label> 
                                 <label htmlFor="other-color-3">
                                     <input 
                                         type="text" 
                                         id='other-color-3' 
-                                        name='colors[]' 
+                                        name='colors' 
                                         /> Other
                                 </label>   
                             </div> 
