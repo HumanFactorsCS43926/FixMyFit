@@ -14,6 +14,7 @@ import {Routes, Route} from 'react-router-dom';
 // import Navbar from './components/widgets/Navbar';
 import SearchBar from './components/widgets/SearchBar';
 import Layout from './components/widgets/Layout';
+import ProfileLayout from './components/widgets/ProfileLayout';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Questionnaire from './page/Questionnaire';
 
@@ -30,10 +31,10 @@ function App() {
                 <Route 
                   path="/ProfilePage"
                   element={
-                    <Layout>
+                    <ProfileLayout>
                       <Profile/>
                       <Questionnaire/>
-                    </Layout>
+                    </ProfileLayout>
                   
                   }
                 />
