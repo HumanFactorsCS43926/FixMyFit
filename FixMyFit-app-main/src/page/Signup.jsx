@@ -5,6 +5,8 @@ import {  getAuth, createUserWithEmailAndPassword  } from 'firebase/auth';
 import { auth } from '../firebase';
 import { db } from '../firebase';
 import { doc, setDoc } from 'firebase/firestore';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Signup = () => {
     const navigate = useNavigate();
@@ -20,20 +22,6 @@ const Signup = () => {
         try{
             const res = await createUserWithEmailAndPassword(auth, email, password);
             navigate("/login")
-            /*await createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                // Signed in 
-                const user = userCredential.user;
-                console.log(user);
-                navigate("/login")
-                // ...
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorCode, errorMessage);
-                // ..
-            });*/
             await setDoc(doc(db, "users", res.user.uid),{
                 userName: {userName},
                 firstName : {firstName},
@@ -44,6 +32,18 @@ const Signup = () => {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log(errorCode, errorMessage);
+            toast.error(errorMessage, {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                });
+            console.log(errorCode, errorMessage)
+            toast.clearWaitingQueue();
         }
     }
   
@@ -52,6 +52,7 @@ const Signup = () => {
   return (
     <main >        
         <section>
+        <ToastContainer limit={1}/>
             <div className="flex h-screen items-center justify-center px-4 sm:px-6 lg:px-8">
                 <div className="w-full max-w-md space-y-8">
                     <div>

@@ -3,6 +3,8 @@ import Text from '../components/elements/Text';
 import {  signInWithEmailAndPassword   } from 'firebase/auth';
 import { auth } from '../firebase';
 import { NavLink, useNavigate } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -21,7 +23,19 @@ const Login = () => {
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
+            //console.log(errorCode, errorMessage)
+            toast.error('Wrong email or password. Try Again', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                });
             console.log(errorCode, errorMessage)
+            toast.clearWaitingQueue();
         });
         
     }
@@ -30,6 +44,7 @@ const Login = () => {
         <>
             <main >        
                 <section>
+                <ToastContainer limit={1}/>
                     <div className="flex h-screen items-center justify-center px-4 sm:px-6 lg:px-8">
                         <div className="w-full max-w-md space-y-8">
                             <div>
