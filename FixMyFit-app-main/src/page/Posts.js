@@ -65,15 +65,16 @@ const Posts = () => {
 
     // Subscribe to the query and store the subscription
     const subscription = onSnapshot(q, (querySnapshot) => {
-      setComments(
-        querySnapshot.docs.map((doc) => ({
+      setComments((prevComments) => ({
+        ...prevComments,
+        [postId]: querySnapshot.docs.map((doc) => ({
           ...doc.data(),
           id: doc.id,
           timestamp: doc.data().timestamp?.toDate().getTime(),
           username: doc.data().username,
           comment: doc.data().comment,
         }))
-      );
+     }));
     });
     
     setCommentSubscriptions((prevSubscriptions) => ({
@@ -109,15 +110,15 @@ const Posts = () => {
   
           <button onClick={() => uploadComment(post.id, index)}>post</button>
   
-          <button onClick={() => getComment(post.id)}>showcomments</button>
-          {comments.map((comment) => (
-  <div key={comment.id} className='bg-white rounded-lg shadow-xl p-8 w-1/2 m-auto mb-4'>
-    <div>
-      <span className='text-base p font-bold'>{comment.username.userName}</span>: {comment.comment}
-      <p className='mt-3 text-xs text-right text-gray-400'>{moment(comment.timestamp).fromNow()}</p>
-    </div>
-  </div>
-))}
+          <button onClick={() => getComment(post.id)} >showcomments</button>
+            {comments[post.id]?.map((comment) => (
+              <div key={comment.id} className='bg-white rounded-lg shadow-xl p-8 w-1/2 m-auto mb-4'>
+                <div>
+                  <span className='text-base p font-bold'>{comment.username.userName}</span>: {comment.comment}
+                  <p className='mt-3 text-xs text-right text-gray-400'>{moment(comment.timestamp).fromNow()}</p>
+                </div>
+              </div>
+            ))}
   
           <p className='mt-3 text-xs text-right text-gray-400'>{moment(post.timestamp).fromNow()}</p>
         </div>
