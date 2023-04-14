@@ -53,15 +53,16 @@ const Posts = () => {
   }, []);
 
   const uploadComment = async (postId, postIndex) => {
-    const commentRef = collection(db, 'post', postId, 'comments');
+    if (postComments.current[postIndex].value.trim() !== '') {
+      const commentRef = collection(db, 'post', postId, 'comments');
     await addDoc(commentRef, {
       comment: postComments.current[postIndex].value,
       username: userData.userName,
       timestamp: serverTimestamp(),
     });
-
     postComments.current[postIndex].value = '';
   };
+}
 
   const getComment = async (postId) => {
     const collection2Ref = collection(db, 'post', postId, 'comments');
