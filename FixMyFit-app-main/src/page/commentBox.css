@@ -24,4 +24,18 @@
         margin-left: 10px;
         cursor: pointer;
 }
+.container {
 
+        padding-top: 5px;
+        display: flex;
+      }
+      
+      .container button:first-child {
+        width: auto;
+      }
+      
+      .container button:last-child {
+        width: auto;
+        margin-left: auto;
+        
+      }

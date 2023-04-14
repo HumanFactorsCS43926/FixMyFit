@@ -104,9 +104,9 @@ const Posts = () => {
   }, [currentUser]);
 
   return (
-    <div className=''>
+    <div >
       {posts.map((post, index) => (
-        <div key={post.id} className='bg-white rounded-lg shadow-xl p-8 w-1/2 m-auto mb-4 '>
+        <div key={post.id} className='bg-white rounded-lg shadow-xl p-8   mb-4'style={{ marginLeft: "10%", width: 'auto', maxWidth: '500px' ,minWidth: '200px'}}>
           <div className='text-base font-bold'>{post.userName?.userName}</div>
           <AliceCarousel>
             {post.images.map((image, index) => (
@@ -118,7 +118,9 @@ const Posts = () => {
           </div>
   
           <input className='comment-box' ref={(el) => (postComments.current[index] = el)} type='text' placeholder='add a comment...' />
-  
+          
+          
+          <div className='container'>
           <button onClick={() => uploadComment(post.id, index)}>post</button>
   
           <button onClick={() => {
@@ -134,6 +136,7 @@ const Posts = () => {
               getComment(post.id);
             }
           }}>{commentSubscriptions[post.id] ? 'hide comments' : 'show comments'}</button>
+          </div>
   
           {commentSubscriptions[post.id] && comments[post.id]?.map((comment) => (
             <div key={comment.id} className='bg-gray rounded-lg shadow-xl p-8 w-100 h-auto m-auto mb-4'>
