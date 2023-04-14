@@ -4314,6 +4314,11 @@
     "whatwg-mimetype" "^2.3.0"
     "whatwg-url" "^8.0.0"
 
+"debounce@^1.1.0":
+  "integrity" "sha512-XRRe6Glud4rd/ZGQfiV1ruXSfbvfJedlV9Y6zOlP+2K04vBYiJEte6stfFkCP03aMnY5tsipamumUjL14fofug=="
+  "resolved" "https://registry.npmjs.org/debounce/-/debounce-1.2.1.tgz"
+  "version" "1.2.1"
+
 "debug@^2.6.0":
   "integrity" "sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA=="
   "resolved" "https://registry.npmjs.org/debug/-/debug-2.6.9.tgz"
@@ -8322,6 +8327,11 @@
   "resolved" "https://registry.npmjs.org/range-parser/-/range-parser-1.2.1.tgz"
   "version" "1.2.1"
 
+"range@0.0.3":
+  "integrity" "sha512-OxK2nY2bmeEB4NxoBraQIBOOeOIxoBvm6yt8MA1kLappgkG3SyLf173iOtT5woWycrtESDD2g0Nl2yt8YPoUnw=="
+  "resolved" "https://registry.npmjs.org/range/-/range-0.0.3.tgz"
+  "version" "0.0.3"
+
 "raw-body@2.5.1":
   "integrity" "sha512-qqJBtEyVgS0ZmPGdCFPWJ3FreoqvG4MVQln/kCgF7Olq95IbOp0/BWyMwbdtn4VTvkM8Y7khCQ2Xgk/tcrCXig=="
   "resolved" "https://registry.npmjs.org/raw-body/-/raw-body-2.5.1.tgz"
@@ -8331,6 +8341,13 @@
     "http-errors" "2.0.0"
     "iconv-lite" "0.4.24"
     "unpipe" "1.0.0"
+
+"react-alice-carousel@^2.7.1":
+  "integrity" "sha512-8ljKi5y+eqlsRkO4qRxEXIP0067w/4zvZvpJ66w+eAbeF0hIgC3iLeSmVtNc+F6ISzFsEJX0cOx7jIawXs0G8A=="
+  "resolved" "https://registry.npmjs.org/react-alice-carousel/-/react-alice-carousel-2.7.1.tgz"
+  "version" "2.7.1"
+  dependencies:
+    "vanilla-swipe" "^2.4.1"
 
 "react-app-polyfill@^3.0.0":
   "integrity" "sha512-sZ41cxiU5llIB003yxxQBYrARBqe0repqPTTYBTmMqTz9szeBbE37BehCE891NZsmdZqqP+xWKdT3eo3vOzN8w=="
@@ -8350,6 +8367,14 @@
   "version" "4.1.0"
   dependencies:
     "web-animation-club" "^0.6.0"
+
+"react-carousel@^4.3.0":
+  "integrity" "sha512-t8MfCK877KuOaQFAsO6NwzkWdhcJG8hxSN5zYR7/cSfTNI6DnM/HswvgvdfajtiETuoLZRMXXLZv6QRLGETKjw=="
+  "resolved" "https://registry.npmjs.org/react-carousel/-/react-carousel-4.3.0.tgz"
+  "version" "4.3.0"
+  dependencies:
+    "debounce" "^1.1.0"
+    "range" "0.0.3"
 
 "react-circular-progressbar@^2.1.0":
   "integrity" "sha512-xp4THTrod4aLpGy68FX/k1Q3nzrfHUjUe5v6FsdwXBl3YVMwgeXYQKDrku7n/D6qsJA9CuunarAboC2xCiKs1g=="
@@ -8549,7 +8574,7 @@
     "loose-envify" "^1.4.0"
     "prop-types" "^15.6.2"
 
-"react@^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16 || ^17 || ^18", "react@^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.8 || ^17.0 || ^18.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^17.0.0 || ^18.0.0", "react@^17.0.0 || ^18.1.0", "react@^18.0.0", "react@^18.2.0", "react@>= 16", "react@>= 16.8 || 18.0.0", "react@>=16", "react@>=16.6.0", "react@>=16.8", "react@>=16.8.0":
+"react@^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16 || ^17 || ^18", "react@^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.8 || ^17.0 || ^18.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^17.0.0 || ^18.0.0", "react@^17.0.0 || ^18.1.0", "react@^18.0.0", "react@^18.2.0", "react@>= 16", "react@>= 16.8 || 18.0.0", "react@>=15.4", "react@>=16", "react@>=16.6.0", "react@>=16.8", "react@>=16.8.0":
   "integrity" "sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ=="
   "resolved" "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   "version" "18.2.0"
@@ -9822,6 +9847,11 @@
     "@types/istanbul-lib-coverage" "^2.0.1"
     "convert-source-map" "^1.6.0"
     "source-map" "^0.7.3"
+
+"vanilla-swipe@^2.4.1":
+  "integrity" "sha512-o6pfI0dipet88ZnPLV4Jx04Ia+U3xANh14vhROW2TOe/mrwk2JGG68+Z0BPoD1YUcQQEnK4SZBXkqFe+K1l7/w=="
+  "resolved" "https://registry.npmjs.org/vanilla-swipe/-/vanilla-swipe-2.4.1.tgz"
+  "version" "2.4.1"
 
 "vary@~1.1.2":
   "integrity" "sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg=="

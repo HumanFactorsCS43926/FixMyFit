@@ -4,6 +4,9 @@ import { updateDoc,serverTimestamp,getDoc,doc, addDoc, collection, onSnapshot, o
 import { db } from '../firebase';
 import moment from 'moment';
 import './commentBox.css';
+import AliceCarousel from 'react-alice-carousel';
+import "react-alice-carousel/lib/alice-carousel.css";
+
 
 const Posts = () => {
   const [posts, setPosts] = useState([]);
@@ -105,11 +108,11 @@ const Posts = () => {
       {posts.map((post, index) => (
         <div key={post.id} className='bg-white rounded-lg shadow-xl p-8 w-1/2 m-auto mb-4 '>
           <div className='text-base font-bold'>{post.userName?.userName}</div>
-          <div className=' flex space-x-3'>
+          <AliceCarousel>
             {post.images.map((image, index) => (
-              <img key={index} src={image} width={'200px'} />
+              <img key={index} src={image} width={'auto'} />
             ))}
-          </div>
+          </AliceCarousel>
           <div>
             <span className='text-base p font-bold'>{post.userName?.userName}</span>: {post.post}
           </div>
