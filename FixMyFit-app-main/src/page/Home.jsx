@@ -2,25 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../firebase'; 
-import Profile from './Profile';
-import Dropzone from './dropzone';
+
 import Posts from './Posts';
 const Home = () => {
-    const [ openTaskInput, setOpenTaskInput ] = useState(false);
-    const [open, setOpen] = useState(false);
-    const [workMin, setWorkMin] = useState(45);
-    const [breakMin, setBreakMin] = useState(15);
-    const inputRef = useRef(null);
-   
 
-    const handleTaskButton = () => {
-        setOpenTaskInput(true);
-        inputRef.current.focus();
-    }
-
-    const handleSettings = () => {
-        setOpen(true);
-    }
 
     useEffect(()=>{
         onAuthStateChanged(auth, (user) => {
@@ -46,8 +31,8 @@ const Home = () => {
 
      
         return (
-            <div className="flex">
-              <div className="p-5 bg-gray-100 min-h-screen w-full">
+            <div className="flex ">
+              <div className="pl-5 p-5 bg-gray-100 min-h-screen w-full">
                 <Posts/>
               </div>
             </div>
