@@ -1,9 +1,10 @@
 .comment-box{
+        margin-top: 8px;
         width: 100%;
         height: auto;
         padding: 12px;
         border: none;
-        border-radius: 20px;
+        border-radius: 7px;
         background-color: #F2F3F5;
         font-size: 14px;
         color: #333333;
@@ -16,7 +17,7 @@
       }
       
 .comment-box button {
-        background-color: #0095F6;
+        background-color: #09c7e1;
         color: #FFFFFF;
         font-size: 14px;
         font-weight: 600;
@@ -27,7 +28,6 @@
         cursor: pointer;
 }
 .container {
-
         padding-top: 5px;
         display: flex;
       }
@@ -47,5 +47,63 @@
         border-radius: 50%;
         border: 2px solid gray;
       }
-
+.post-button {
+        background-color: #09c7e1;
+        color: #FFFFFF;
+        font-size: 14px;
+        font-weight: 600;
+        border: none;
+        border-radius: 7px;
+        padding: 8px 16px;
+        margin-left: 10px;
+        
+        cursor: pointer;
+      }
+.show-comment-button {
+        background-color: #09c7e1;
+        color: #FFFFFF;
+        font-size: 14px;
+        font-weight: 600;
+        border: none;
+        border-radius: 7px;
+        padding: 5px 16px;
+        margin-left: 10px;
+        
+        cursor: pointer;
+      }
       
+.show-delete-button {
+        background-color: #D11A2A;
+        color: #FFFFFF;
+        font-size: 14px;
+        font-weight: 600;
+        border: none;
+        border-radius: 7px;
+        padding: 5px 10px;
+        
+        cursor: pointer;
+      }
+
+.show-deletePost-button {
+        background-color: #D11A2A;
+        color: #FFFFFF;
+        font-size: 14px;
+        font-weight: 600;
+        border: none;
+        border-radius: 7px;
+        padding: 5px 10px;
+        margin-left: 340px;
+        
+        cursor: pointer;
+      }
+.show-Commentlike-button {
+        background-color: #09c7e1;
+        color: #FFFFFF;
+        font-size: 14px;
+        font-weight: 600;
+        border: none;
+        border-radius: 7px;
+        padding: 5px 10px;
+        
+        cursor: pointer;
+      }

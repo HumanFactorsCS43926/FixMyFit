@@ -225,8 +225,10 @@ const Posts = () => {
   return (
     <div >
       {posts.map((post, index) => ( 
-        <div key={post.id} className='bg-white rounded-lg shadow-xl p-8   mb-4'style={{ marginLeft: "10%", width: 'auto', maxWidth: '500px' ,minWidth: '200px'}}>
-          <div className='text-base font-bold'>{post.userName?.userName}</div>
+        <div key={post.id} className='bg-white rounded-lg shadow-xl p-8   mb-4'style={{ marginLeft: "30%", width: 'auto', maxWidth: '500px' ,minWidth: '200px'}}>
+          <div className='text-base font-bold'>{post.userName?.userName}{currentUser.uid === post.user &&
+                  <button  class="show-deletePost-button" onClick={() => deletePost(post.id)}>Delete</button>
+                }</div>
           <AliceCarousel>
             {post.images.map((image, index) => (
               <img key={index} src={image} width={'auto'} />
@@ -236,6 +238,7 @@ const Posts = () => {
                 <icon className="fas fa-heart"></icon>  
                 <span>{post.likes}</span>
               </button>
+              <button class="post-button" onClick={() => uploadComment(post.id, index)}>Comment</button>
           <div>
             <span className='text-base p font-bold'>{post.userName?.userName}</span>: {post.post}
           </div>
@@ -244,9 +247,11 @@ const Posts = () => {
           
           
           <div className='container'>
-          <button onClick={() => uploadComment(post.id, index)}>post</button>
+         
+          
+
   
-          <button onClick={() => {
+          <button class="show-comment-button" onClick={() => {
             if (commentSubscriptions[post.id]) {
               // unsubscribe from comments if already subscribed
               commentSubscriptions[post.id]();
@@ -267,18 +272,14 @@ const Posts = () => {
                 <span className='text-base p font-bold'>{comment.username.userName}</span>: {comment.comment}
                 <p className='mt-3 text-xs text-right text-gray-400'>{moment(comment.timestamp).fromNow()}</p>
                 {currentUser.uid === comment.useId &&
-                  <button onClick={() => deleteComment(post.id, comment.id)}>Delete comment</button>
+                  <button class="show-delete-button" onClick={() => deleteComment(post.id, comment.id)}>Delete</button>
                 }
                 
-                <button onClick={() => updateCommentLikes(post.id, comment.id, currentUser.uid)}>{comment.likes} like</button>
               </div>
             </div>
           ))}
   
           <p className='mt-3 text-xs text-right text-gray-400'>{moment(post.timestamp).fromNow()}</p>
-          {currentUser.uid === post.user &&
-                  <button onClick={() => deletePost(post.id)}>Delete comment</button>
-                }
           
         </div>
       ))}

@@ -81,6 +81,7 @@ const SearchBar = ({placeholder, data}) => {
           }
   
           .searchContainer {
+            margin-right: 100px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -88,10 +89,13 @@ const SearchBar = ({placeholder, data}) => {
           }
           
           #user_posts {
+            padding-top: 40px;
+            margin-right: 6%;
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             align-items: flex-start;
+            max-width: 500px;
           }
           
           .postContainer {
