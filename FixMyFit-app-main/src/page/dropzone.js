@@ -114,7 +114,7 @@ export default function Dropzone() {
   }, [currentUser]);
 
   return(
-    <div style={{marginTop: "10%"}}>
+    <div style={{marginTop: "20%"}}>
   
       <div {...getRootProps({style: {
         border: "1px solid #ccc",
@@ -131,7 +131,8 @@ export default function Dropzone() {
   
       {selected_images}
       <div>
-  <input ref={postRef} type="text" placeholder='enter post description...' style={{ marginBottom: "10px" }} />
+      <input ref={postRef} type="text" placeholder='enter post description...' style={{ width: "631px", marginBottom: "10px", textAlign: "center"  }} />
+
   <button
     onClick={uploadPost}
     disabled={isUploadDisabled}
@@ -143,7 +144,7 @@ export default function Dropzone() {
       backgroundColor: "#09C7E1",
       borderRadius: "5px",
       fontWeight: "bold",
-      width: "40%", // Set the width to 100%
+      width: "631px", // Set the width to 100%
       display: "block",
     }}
   >
