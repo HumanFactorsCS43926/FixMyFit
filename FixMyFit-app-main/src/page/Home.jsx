@@ -32,11 +32,7 @@ const Home = () => {
      
         return (
             <div className="flex ">
-<<<<<<< HEAD
-              <div className="pl-5 p-5 mt-10 px bg-gray-100 min-h-screen w-full">
-=======
               <div className="pl-5 p-5 mt-10 bg-gray-100 min-h-screen w-full">
->>>>>>> stylingchanges
                 <Posts/>
               </div>
             </div>
