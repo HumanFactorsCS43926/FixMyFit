@@ -1,7 +1,8 @@
 .searchInputs{
     margin-top: 100px;
-    display: block;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .search input{
@@ -18,8 +19,9 @@
     height: 40px;
     width: 50px;
     background-color: white;
-    display: block;
-    place-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 input:focus{

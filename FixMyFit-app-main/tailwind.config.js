@@ -14,7 +14,7 @@ module.exports = {
       'secondary': '#3e3e3e',  
       'tertiary': '#09c7e1',    
       'card': '#222b32',
-      'sidebar': '#2b343b'
+      'sidebar': '#2b344c'
     },
     fontFamily: {
       'headings': ['Poppins', 'sans-serif'],
