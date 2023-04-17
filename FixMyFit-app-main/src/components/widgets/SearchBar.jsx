@@ -74,81 +74,101 @@ const SearchBar = ({placeholder, data}) => {
           form {
             display: flex;
           }
-
+  
           form input, button {
             display: inline-block;
             margin-right: 10px;
           }
+  
+          .searchContainer {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+          }
+          
+          #user_posts {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-start;
+          }
+          
+          .postContainer {
+            margin: 0 10px;
+            width: auto;
+            max-width: 500px;
+            min-width: 200px;
+          }
+          
+          .post {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+            padding: 20px;
+            margin-bottom: 20px;
+          }
+          
+          .postHeader {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+          }
+          
+          .postImages {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+          }
+          
+          .postImage {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+          }
+          
+          .postContent {
+            font-size: 16px;
+          }
         `}
-
       </style>
-      <div className="search">
-        <div className="searchInputs">
-          <form onSubmit={handleSearch}>
-            <input type="text" placeholder={placeholder} onChange={(e) => setSearchQuery(e.target.value)} />
-            <button type='submit'
-              className='relative flex text-xl font-medium text-white' disabled={isLoading}>
-              {isLoading ? 'Loading...' : 'Search'}
-            </button>
-          </form>
+      <div className="searchContainer">
+        <div className="search">
+          <div className="searchInputs">
+            <form onSubmit={handleSearch}>
+              <input type="text" placeholder={placeholder} onChange={(e) => setSearchQuery(e.target.value)} />
+              <button type='submit'
+                className='relative flex text-xl font-medium text-white' disabled={isLoading}>
+                {isLoading ? 'Loading...' : 'Search'}
+              </button>
+            </form>
+          </div>
+          <div className="dataResult"></div>
         </div>
-        <div className="dataResult"></div>
-      </div>
-
-
-      {queriedUser !== '' && 
-        <>
-          <div className='container'>
-
-              <div id='user_posts'>
-                {userPosts.map((post, index) => (
-                  <div key={post.id} className='bg-white rounded-lg shadow-xl p-8 mb-4' style={{ marginLeft: "10%", width: 'auto', maxWidth: '500px' ,minWidth: '200px'}}>
-                    <div className='text-base font-bold'>{post.userName?.userName}</div>
+        {queriedUser !== '' && 
+          <div id='user_posts'>
+            {userPosts.map((post, index) => (
+              <div key={post.id} className='postContainer'>
+                <div className='post'>
+                  <div className='postHeader'>{post.userName?.userName}</div>
+                  <div className='postImages'>
                     <AliceCarousel>
                       {post.images.map((image, index) => (
-                        <img key={index} src={image} width={'auto'} />
+                        <img key={index} src={image} className='postImage' />
                       ))}
                     </AliceCarousel>
-                        
-                    <div>
-                      <span className='text-base p font-bold'>{post.userName?.userName}</span>: {post.post}
-                    </div>
-            
                   </div>
-                ))}
-              </div>
-
-              {/* <div id='user_wardrobe'>
-                {userWardrobe.map((post, index) => (
-                  <div key={post.id} className='bg-white rounded-lg shadow-xl p-8 mb-4' style={{ marginLeft: "10%", width: 'auto', maxWidth: '500px' ,minWidth: '200px'}}>
-                    <div className='text-base font-bold'>{post.userName?.userName}</div>
-                    {post.images.map((image, index) => (
-                      <img key={index} src={image} width={'auto'} />
-                    ))}
-                    <div>
-                      <span className='text-base p font-bold'>{post.userName?.userName}</span>: {post.post}
-                    </div>
+                  <div className='postContent'>
+                    <span className='font-bold'>{post.userName?.userName}</span>: {post.post}
                   </div>
-                ))}
-
-              </div> */}
-              
-              <div id='fit_template'>
-
+                </div>
               </div>
+            ))}
           </div>
-        
-        
-        
-        </>
-      }
-
-      
-
-        </main>
-
-  
-
+        }
+      </div>
+    </main>
   );
 }
 
