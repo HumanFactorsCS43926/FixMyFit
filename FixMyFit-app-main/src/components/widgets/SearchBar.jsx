@@ -17,9 +17,30 @@ const SearchBar = ({placeholder, data}) => {
    console.log("test");
    console.log(queriedUser);
 
-   const handleSearch = (event) => {
+  //  const handleSearch = (event) => {
+  //   event.preventDefault();
+  //   setQueriedUser(searchQuery);
+  //   const collectionRef = collection(db, 'post');
+  //   const q = query(collectionRef, where("userName.userName", "==", queriedUser));
+  //   const unsubscribe = onSnapshot(q, (querySnapshot) => {
+  //     setUserPosts(
+  //       querySnapshot.docs.map((doc) => {
+  //         return {
+  //           ...doc.data()
+  //         };
+  //       })
+  //     );
+  //   });
+  //  } 
+
+  function handleSearch (event) {
     event.preventDefault();
     setQueriedUser(searchQuery);
+    
+    
+  }
+
+  useEffect(() => {
     const collectionRef = collection(db, 'post');
     const q = query(collectionRef, where("userName.userName", "==", queriedUser));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -31,8 +52,7 @@ const SearchBar = ({placeholder, data}) => {
         })
       );
     });
-   } 
-
+  }, [queriedUser]);
    
    //pulls user posts
   //  useEffect(() => {
