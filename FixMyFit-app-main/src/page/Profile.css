@@ -1,0 +1,23 @@
+.wardrobeBox{
+    display: flex;
+    justify-content: left;
+}
+.wardrobeIcon{
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10px;
+}
+.wText{
+    grid-row: 2;
+    align-self: center;
+    color: white;
+    
+}
+.wImage{
+    grid-row: 1;
+    border-radius: 10px;
+    align-self: center;
+    color: white;
+}

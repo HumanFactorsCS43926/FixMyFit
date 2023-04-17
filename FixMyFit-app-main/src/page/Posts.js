@@ -37,7 +37,7 @@ const Posts = () => {
 
   useEffect(() => {
     const collectionRef = collection(db, 'post');
-    const q = query(collectionRef, orderBy('likes', 'desc'));
+    const q = query(collectionRef, orderBy('timestamp', 'desc'));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       setPosts(
         querySnapshot.docs.map((doc) => {
