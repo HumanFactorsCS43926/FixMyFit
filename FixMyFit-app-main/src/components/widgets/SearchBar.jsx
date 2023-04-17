@@ -8,18 +8,24 @@ import { db } from '../../firebase';
 import { getAuth } from 'firebase/auth';
 
 const SearchBar = ({placeholder, data}) => { 
-   const [queriedUser, setQueriedUser] = useState(null);
-   const [searchQuery, setSearchQuery] = useState('');
-   const [userPosts, setUserPosts] = useState([]);
-   const [userWardrobe, setUserWardrobe] = useState([]);
-   const auth = getAuth();
-   const user = auth.currentUser;
-   console.log("test");
-   console.log(queriedUser);
+  const [queriedUser, setQueriedUser] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [userPosts, setUserPosts] = useState([]);
+  const [userWardrobe, setUserWardrobe] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const auth = getAuth();
+  const user = auth.currentUser;
 
-   const handleSearch = (event) => {
+
+  function handleSearch (event) {
     event.preventDefault();
     setQueriedUser(searchQuery);
+    setIsLoading(true);
+    
+    
+  }
+
+  useEffect(() => {
     const collectionRef = collection(db, 'post');
     const q = query(collectionRef, where("userName.userName", "==", queriedUser));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -30,8 +36,11 @@ const SearchBar = ({placeholder, data}) => {
           };
         })
       );
+      setIsLoading(false);
     });
-   } 
+  }, [queriedUser]);
+
+
 
    
    //pulls user posts
@@ -78,7 +87,8 @@ const SearchBar = ({placeholder, data}) => {
           <form onSubmit={handleSearch}>
             <input type="text" placeholder={placeholder} onChange={(e) => setSearchQuery(e.target.value)} />
             <button type='submit'
-              className='relative flex text-xl font-medium text-white'>Search
+              className='relative flex text-xl font-medium text-white' disabled={isLoading}>
+              {isLoading ? 'Loading...' : 'Search'}
             </button>
           </form>
         </div>
