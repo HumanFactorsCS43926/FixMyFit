@@ -44,7 +44,7 @@ function App() {
                   element={
                     <Layout>
                       <SearchPage/>
-                        <SearchBar placeholder="Find your fit..."/>
+                      <SearchBar placeholder="Find your fit..."/>
                     </Layout>
                   
                   }

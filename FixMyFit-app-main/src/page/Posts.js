@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useAuth } from '../firebase';
-import { updateDoc,serverTimestamp,getDoc,doc, addDoc, collection, onSnapshot, orderBy, query, increment } from 'firebase/firestore';
+import { deleteDoc, updateDoc,serverTimestamp,getDoc,doc, addDoc, collection, onSnapshot, orderBy, query, increment } from 'firebase/firestore';
 import { db } from '../firebase';
 import moment from 'moment';
 import './commentBox.css';
@@ -37,7 +37,7 @@ const Posts = () => {
 
   useEffect(() => {
     const collectionRef = collection(db, 'post');
-    const q = query(collectionRef, orderBy('likes', 'desc'));
+    const q = query(collectionRef, orderBy('timestamp', 'desc'));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       setPosts(
         querySnapshot.docs.map((doc) => {
@@ -62,6 +62,7 @@ const Posts = () => {
       comment: postComments.current[postIndex].value,
       username: userData.userName,
       timestamp: serverTimestamp(),
+      userId: currentUser.uid,
     });
     postComments.current[postIndex].value = '';
   };
@@ -81,6 +82,7 @@ const Posts = () => {
           timestamp: doc.data().timestamp?.toDate().getTime(),
           username: doc.data().username,
           comment: doc.data().comment,
+          useId: doc.data().userId
         }))
      }));
     });
@@ -155,6 +157,62 @@ const Posts = () => {
     })
   }
 
+  const deleteComment = async (postId, commentId) => {
+    try {
+      // Get a reference to the comment document
+      const commentRef = doc(db, 'post', postId, 'comments', commentId);
+  
+      // Check if the comment exists
+      const commentSnapshot = await getDoc(commentRef);
+      if (!commentSnapshot.exists()) {
+        throw new Error('Comment does not exist');
+      }
+  
+      // Get the data for the comment
+      const commentData = commentSnapshot.data();
+  
+      // Check if the user is authorized to delete the comment
+      console.log(commentData.username);
+      console.log(userData.userName);
+
+  
+      // Delete the comment document
+      await deleteDoc(commentRef);
+  
+      console.log('Comment deleted successfully');
+    } catch (error) {
+      console.error('Error deleting comment:', error);
+    }
+  };
+
+  const deletePost = async (postId) => {
+    try {
+      // Get a reference to the comment document
+      const commentRef = doc(db, 'post', postId);
+  
+      // Check if the comment exists
+      const commentSnapshot = await getDoc(commentRef);
+      if (!commentSnapshot.exists()) {
+        throw new Error('Comment does not exist');
+      }
+  
+      // Get the data for the comment
+      const commentData = commentSnapshot.data();
+  
+      // Check if the user is authorized to delete the comment
+      console.log(commentData.username);
+      console.log(userData.userName);
+
+  
+      // Delete the comment document
+      await deleteDoc(commentRef);
+  
+      console.log('Comment deleted successfully');
+    } catch (error) {
+      console.error('Error deleting comment:', error);
+    }
+  };
+
   useEffect(() => {
     getUserData();
 
@@ -208,12 +266,20 @@ const Posts = () => {
               <div>
                 <span className='text-base p font-bold'>{comment.username.userName}</span>: {comment.comment}
                 <p className='mt-3 text-xs text-right text-gray-400'>{moment(comment.timestamp).fromNow()}</p>
+                {currentUser.uid === comment.useId &&
+                  <button onClick={() => deleteComment(post.id, comment.id)}>Delete comment</button>
+                }
+                
                 <button onClick={() => updateCommentLikes(post.id, comment.id, currentUser.uid)}>{comment.likes} like</button>
               </div>
             </div>
           ))}
   
           <p className='mt-3 text-xs text-right text-gray-400'>{moment(post.timestamp).fromNow()}</p>
+          {currentUser.uid === post.user &&
+                  <button onClick={() => deletePost(post.id)}>Delete comment</button>
+                }
+          
         </div>
       ))}
     </div>
