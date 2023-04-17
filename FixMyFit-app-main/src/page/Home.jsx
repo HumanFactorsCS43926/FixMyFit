@@ -32,7 +32,7 @@ const Home = () => {
      
         return (
             <div className="flex ">
-              <div className="pl-5 p-5 bg-gray-100 min-h-screen w-full">
+              <div className="pl-5 p-5 mt-10 px bg-gray-100 min-h-screen w-full">
                 <Posts/>
               </div>
             </div>

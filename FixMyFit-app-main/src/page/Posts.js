@@ -225,8 +225,8 @@ const Posts = () => {
   return (
     <div >
       {posts.map((post, index) => ( 
-        <div key={post.id} className='bg-white rounded-lg shadow-xl p-8   mb-4'style={{ marginLeft: "10%", width: 'auto', maxWidth: '500px' ,minWidth: '200px'}}>
-          <div className='text-base font-bold'>{post.userName?.userName}</div>
+        <div key={post.id} className='bg-white rounded-lg shadow-xl p-8 mb-4' style={{ marginLeft: "30%", width: 'auto', maxWidth: '500px', minWidth: '200px'}}>
+<div className='text-base font-bold'>{post.userName?.userName}</div>
           <AliceCarousel>
             {post.images.map((image, index) => (
               <img key={index} src={image} width={'auto'} />

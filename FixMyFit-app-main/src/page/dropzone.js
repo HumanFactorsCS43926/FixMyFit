@@ -104,7 +104,7 @@ export default function Dropzone() {
 
   const selected_images = selectedImages?.map(file=>(
     <div>
-        <img src={file.preview} style={{width:"200px"}}alt=""/>
+        <img src={file.preview} style={{width:"600px"}}alt=""/>
     </div>
   ))
 
@@ -114,16 +114,43 @@ export default function Dropzone() {
   }, [currentUser]);
 
   return(
-    <div>
-      <input ref={postRef} type="text" placeholder='enter post description...'/>
-      <div {...getRootProps({style})}>
-          <input {...getInputProps()}/>
-          <p>Drop the the files here</p>
+    <div style={{marginTop: "10%"}}>
+  
+      <div {...getRootProps({style: {
+        border: "1px solid #ccc",
+        padding: "8px 16px",
+        marginTop: "10px",
+        width: "200px",
+        color: "#777",
+        background: "#fff",
+        marginBottom: "10px", // add margin-bottom for spacing
+      }})}>
+        <input {...getInputProps()} />
+        <p>Drop the files here</p>
       </div>
+  
       {selected_images}
-      <button onClick={uploadPost} disabled={isUploadDisabled}className="
-      group relative flex w-full justify-center rounded-md border border-transparent 
-      bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">post</button>
+      <div>
+  <input ref={postRef} type="text" placeholder='enter post description...' style={{ marginBottom: "10px" }} />
+  <button
+    onClick={uploadPost}
+    disabled={isUploadDisabled}
+    className=""
+    style={{
+      color: "WHITE",
+      border: "1px solid #09C7E1",
+      padding: "8px 16px",
+      backgroundColor: "#09C7E1",
+      borderRadius: "5px",
+      fontWeight: "bold",
+      width: "40%", // Set the width to 100%
+      display: "block",
+    }}
+  >
+    Post
+  </button>
+</div>
+
     </div>
-  )
+  );
 }
