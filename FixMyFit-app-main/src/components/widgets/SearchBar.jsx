@@ -14,14 +14,12 @@ const SearchBar = ({placeholder, data}) => {
    const [userWardrobe, setUserWardrobe] = useState([]);
    const auth = getAuth();
    const user = auth.currentUser;
+   console.log("test");
+   console.log(queriedUser);
 
    const handleSearch = (event) => {
     event.preventDefault();
     setQueriedUser(searchQuery);
-   } 
-
-   //pulls user posts
-   useEffect(() => {
     const collectionRef = collection(db, 'post');
     const q = query(collectionRef, where("userName.userName", "==", queriedUser));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -33,8 +31,14 @@ const SearchBar = ({placeholder, data}) => {
         })
       );
     });
-    return unsubscribe;
-  }, []);
+   } 
+
+   
+   //pulls user posts
+  //  useEffect(() => {
+    
+  //   return unsubscribe;
+  // }, []);
 
   // //pulls user wardrobe
   // useEffect(() => {
