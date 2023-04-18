@@ -10,7 +10,6 @@ function Dropzone({clothingType}) {
   const [posts, setPosts] = useState([]);
   const [selectedImages, setSelectedImages]= useState([]);
   const [userData, setUserData] = useState(null); // state to store user data
-  const postRef = useRef(null);
   
   const baseStyle = {
     flex: 1,
@@ -59,6 +58,7 @@ function Dropzone({clothingType}) {
       console.log("User data is not available yet");
       return;
     }
+    getUserData();
     const docRef = await addDoc(collection(db, 'users', currentUser.uid, clothingType), {
       timestamp: serverTimestamp(),
       images: selectedImages.map((image) => image.downloadURL),
@@ -74,7 +74,6 @@ function Dropzone({clothingType}) {
         })
       })
     )
-    postRef.current.value='';
     setSelectedImages([]);
   }
 
@@ -114,8 +113,9 @@ function Dropzone({clothingType}) {
   }, [currentUser]);
 
   useEffect(() => {
-    if (!currentUser || !currentUser.uid) {
-      return <div>Loading...</div>;
+    if (!userData) {
+      console.log("User data is not available yet");
+      return;
     }
     const collectionRef = collection(db, 'users', currentUser.uid, clothingType);
     const q = query(collectionRef, orderBy('timestamp', 'desc'));
@@ -132,15 +132,8 @@ function Dropzone({clothingType}) {
       );
     });
 
-    return () => {
-      unsubscribe();
-    };
-  }, [currentUser.uid, clothingType, db]);
-
-  useEffect(() => {
-    getUserData();
-    // Unsubscribe from all comment subscriptions when component unmounts
-  }, [currentUser]);
+    return unsubscribe();
+  }, []);
 
   return(
     <div>
