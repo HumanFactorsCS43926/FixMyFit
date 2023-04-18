@@ -17,6 +17,12 @@ const SearchBar = ({placeholder, data}) => {
   const [userShorts, setUserShorts] = useState([]);
   const [userSocks, setUserSocks] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  const [combinedSocks, setCombinedSocks] = useState([]);
+  const [combinedPants, setCombinedPants] = useState([]);
+  const [combinedShirts, setCombinedShirts] = useState([]);
+  const [combinedShoes, setCombinedShoes] = useState([]);
+  const [combinedShorts, setCombinedShorts] = useState([]);
   
   const auth = getAuth();
   const user = auth.currentUser;
@@ -27,7 +33,7 @@ const SearchBar = ({placeholder, data}) => {
     event.preventDefault();
     setQueriedUser(searchQuery);
     const collectionRef = collection(db, 'users');
-    const qUser = query(collectionRef, where("email.email", "==", "maldonado.nico12@gmail.com"));
+    const qUser = query(collectionRef, where("userName.userName", "==", searchQuery));
     getDocs(qUser).then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         setUserID(doc.id);
@@ -118,6 +124,42 @@ const SearchBar = ({placeholder, data}) => {
     
   }, [userID]);
 
+  useEffect(() => {
+    const combinedPantsData = userPants.reduce((acc, pant) => {
+      return [...acc, ...pant.images.filter(image => image !== '')]; // Concatenate images arrays
+    }, []);
+    setCombinedPants(combinedPantsData);
+  }, [userPants]);
+
+  useEffect(() => {
+    const combinedShoesData = userShoes.reduce((acc, shoe) => {
+      return [...acc, ...shoe.images.filter(image => image !== '')]; // Concatenate images arrays
+    }, []);
+    setCombinedShoes(combinedShoesData);
+  }, [userShoes]);
+
+  useEffect(() => {
+    const combinedShirtsData = userShirts.reduce((acc, shirt) => {
+      return [...acc, ...shirt.images.filter(image => image !== '')]; // Concatenate images arrays
+    }, []);
+    setCombinedShirts(combinedShirtsData);
+  }, [userShirts]);
+
+
+  useEffect(() => {
+    const combinedShortsData = userShorts.reduce((acc, short) => {
+      return [...acc, ...short.images.filter(image => image !== '')]; // Concatenate images arrays
+    }, []);
+    setCombinedShorts(combinedShortsData);
+  }, [userShorts]);
+
+  useEffect(() => {
+    const combinedSocksData = userSocks.reduce((acc, sock) => {
+      return [...acc, ...sock.images.filter(image => image !== '')]; // Concatenate images arrays
+    }, []);
+    setCombinedSocks(combinedSocksData);
+  }, [userSocks]);
+
   return (
     <main>
       <style>
@@ -164,9 +206,11 @@ const SearchBar = ({placeholder, data}) => {
                   <div key={post.id} className='bg-white rounded-lg shadow-xl p-8 mb-4' style={{ marginLeft: "10%", width: 'auto', maxWidth: '500px' ,minWidth: '200px'}}>
                     <div className='text-base font-bold'>{post.userName?.userName}</div>
                     <AliceCarousel>
-                      {post.images.map((image, index) => (
-                        <img key={index} src={image} width={'auto'} />
-                      ))}
+                    {post.images.filter((image) => image !== '') // Filter out empty images
+              .map((image, index) => (
+                <img key={index} src={image} width={'auto'} style={{ marginTop: '10px' }} // Add margin-top style
+                />
+            ))}
                     </AliceCarousel>
                     <div>
                       <span className='text-base p font-bold'>{post.userName?.userName}</span>: {post.post}
@@ -176,72 +220,74 @@ const SearchBar = ({placeholder, data}) => {
               </div>
 
               <div id='user_wardrobe'>
-              {userShirts.map((shirts, index) => (
-                <div key={shirts.id} className='bg-white rounded-lg shadow-xl p-8 mb-4' style={{ marginLeft: "10%", width: 'auto', maxWidth: '500px' ,minWidth: '200px'}}>
-                  {/* <div className='text-base font-bold'>{post.userName?.userName}</div> */}
-                  <AliceCarousel>
-                    {shirts.images.map((image, index) => (
-                      <img key={index} src={image} width={'auto'} />
-                    ))}
-                  </AliceCarousel>
-                  {/* <div>
-                    <span className='text-base p font-bold'>{post.userName?.userName}</span>: {post.post}
-                  </div> */}
-                </div>
-              ))}
-              {userPants.map((pants, index) => (
-                  <div key={pants.id} className='bg-white rounded-lg shadow-xl p-8 mb-4' style={{ marginLeft: "10%", width: 'auto', maxWidth: '500px' ,minWidth: '200px'}}>
-                    {/* <div className='text-base font-bold'>{post.userName?.userName}</div> */}
-                    <AliceCarousel>
-                      {pants.images.map((image, index) => (
-                        <img key={index} src={image} width={'auto'} />
-                      ))}
-                    </AliceCarousel>
-                    {/* <div>
-                      <span className='text-base p font-bold'>{post.userName?.userName}</span>: {post.post}
-                    </div> */}
-                  </div>
-                ))}
 
-                {userShoes.map((shoes, index) => (
-                  <div key={shoes.id} className='bg-white rounded-lg shadow-xl p-8 mb-4' style={{ marginLeft: "10%", width: 'auto', maxWidth: '500px' ,minWidth: '200px'}}>
+              { combinedShirts.length > 0 &&// Conditionally render if queriedUser is not empty and combinedShirts is not empty
+                  <div className='bg-white rounded-lg shadow-xl p-8 mb-4' style={{ marginLeft: "10%", width: 'auto', maxWidth: '500px' ,minWidth: '200px'}}>
                     {/* <div className='text-base font-bold'>{post.userName?.userName}</div> */}
                     <AliceCarousel>
-                      {shoes.images.map((image, index) => (
-                        <img key={index} src={image} width={'auto'} />
-                      ))}
-                    </AliceCarousel>
-                    {/* <div>
-                      <span className='text-base p font-bold'>{post.userName?.userName}</span>: {post.post}
-                    </div> */}
+                  {combinedShirts.filter((image) => image !== '').map((image, index) => (
+                    <img key={index} src={image} alt={`Shirt ${index}`} className='w-full h-48 object-cover mb-2' />
+                  ))}
+                </AliceCarousel>
+                    <div>
+                      <span className='text-base p font-bold'>Shirts</span>
+                    </div> 
                   </div>
-                ))}
-                {userShorts.map((shorts, index) => (
-                  <div key={shorts.id} className='bg-white rounded-lg shadow-xl p-8 mb-4' style={{ marginLeft: "10%", width: 'auto', maxWidth: '500px' ,minWidth: '200px'}}>
+                }
+              { combinedPants.length > 0 &&// Conditionally render if queriedUser is not empty and combinedShirts is not empty
+                  <div className='bg-white rounded-lg shadow-xl p-8 mb-4' style={{ marginLeft: "10%", width: 'auto', maxWidth: '500px' ,minWidth: '200px'}}>
                     {/* <div className='text-base font-bold'>{post.userName?.userName}</div> */}
                     <AliceCarousel>
-                      {shorts.images.map((image, index) => (
-                        <img key={index} src={image} width={'auto'} />
-                      ))}
-                    </AliceCarousel>
-                    {/* <div>
-                      <span className='text-base p font-bold'>{post.userName?.userName}</span>: {post.post}
-                    </div> */}
+                  {combinedPants.filter((image) => image !== '').map((image, index) => (
+                    <img key={index} src={image} alt={`Pant ${index}`} className='w-full h-48 object-cover mb-2' />
+                  ))}
+                </AliceCarousel>
+                    <div>
+                      <span className='text-base p font-bold'>Pants</span>
+                    </div> 
                   </div>
-                ))}
-                {userSocks.map((socks, index) => (
-                  <div key={socks.id} className='bg-white rounded-lg shadow-xl p-8 mb-4' style={{ marginLeft: "10%", width: 'auto', maxWidth: '500px' ,minWidth: '200px'}}>
+                }
+              { combinedShorts.length > 0 &&// Conditionally render if queriedUser is not empty and combinedShirts is not empty
+                  <div className='bg-white rounded-lg shadow-xl p-8 mb-4' style={{ marginLeft: "10%", width: 'auto', maxWidth: '500px' ,minWidth: '200px'}}>
                     {/* <div className='text-base font-bold'>{post.userName?.userName}</div> */}
                     <AliceCarousel>
-                      {socks.images.map((image, index) => (
-                        <img key={index} src={image} width={'auto'} />
-                      ))}
-                    </AliceCarousel>
-                    {/* <div>
-                      <span className='text-base p font-bold'>{post.userName?.userName}</span>: {post.post}
-                    </div> */}
+                  {combinedShorts.filter((image) => image !== '').map((image, index) => (
+                    <img key={index} src={image} alt={`Short ${index}`} className='w-full h-48 object-cover mb-2' />
+                  ))}
+                </AliceCarousel>
+                    <div>
+                      <span className='text-base p font-bold'>Shorts</span>
+                    </div> 
                   </div>
-                ))}
+                }
+              { combinedSocks.length > 0 &&// Conditionally render if queriedUser is not empty and combinedShirts is not empty
+                  <div className='bg-white rounded-lg shadow-xl p-8 mb-4' style={{ marginLeft: "10%", width: 'auto', maxWidth: '500px' ,minWidth: '200px'}}>
+                    {/* <div className='text-base font-bold'>{post.userName?.userName}</div> */}
+                    <AliceCarousel>
+                  {combinedSocks.filter((image) => image !== '').map((image, index) => (
+                    <img key={index} src={image} alt={`Sock ${index}`} className='w-full h-48 object-cover mb-2' />
+                  ))}
+                </AliceCarousel>
+                    <div>
+                      <span className='text-base p font-bold'>socks</span>
+                    </div> 
+                  </div>
+                }
+              { combinedShoes.length > 0 &&// Conditionally render if queriedUser is not empty and combinedShirts is not empty
+                  <div className='bg-white rounded-lg shadow-xl p-8 mb-4' style={{ marginLeft: "10%", width: 'auto', maxWidth: '500px' ,minWidth: '200px'}}>
+                    {/* <div className='text-base font-bold'>{post.userName?.userName}</div> */}
+                    <AliceCarousel>
+                  {combinedShoes.filter((image) => image !== '').map((image, index) => (
+                    <img key={index} src={image} alt={`Shoe ${index}`} className='w-full h-48 object-cover mb-2' />
+                  ))}
+                </AliceCarousel>
+                    <div>
+                      <span className='text-base p font-bold'>Shoes</span>
+                    </div> 
+                  </div>
+              }
+                
+                
                 
               </div>
               
