@@ -175,6 +175,7 @@ const SearchBar = ({placeholder, data}) => {
             display: flex;
             width: 100%;
             overflow: hidden;
+            padding-left:25%;
           }
           #user_posts, #user_wardrobe {
             display: inline-block;
@@ -225,7 +226,7 @@ const SearchBar = ({placeholder, data}) => {
                     {/* <div className='text-base font-bold'>{post.userName?.userName}</div> */}
                     <AliceCarousel>
                   {combinedShirts.filter((image) => image !== '').map((image, index) => (
-                    <img key={index} src={image} alt={`Shirt ${index}`} className='w-full h-48 object-cover mb-2' />
+                    <img key={index} src={image} width={'auto'} alt={`Shirt ${index}`} className='w-full h-48 object-cover mb-2' />
                   ))}
                 </AliceCarousel>
                     <div>
