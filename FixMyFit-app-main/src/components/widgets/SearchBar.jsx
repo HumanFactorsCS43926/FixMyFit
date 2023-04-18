@@ -189,6 +189,59 @@ const SearchBar = ({placeholder, data}) => {
                   </div> */}
                 </div>
               ))}
+              {userPants.map((pants, index) => (
+                  <div key={pants.id} className='bg-white rounded-lg shadow-xl p-8 mb-4' style={{ marginLeft: "10%", width: 'auto', maxWidth: '500px' ,minWidth: '200px'}}>
+                    {/* <div className='text-base font-bold'>{post.userName?.userName}</div> */}
+                    <AliceCarousel>
+                      {pants.images.map((image, index) => (
+                        <img key={index} src={image} width={'auto'} />
+                      ))}
+                    </AliceCarousel>
+                    {/* <div>
+                      <span className='text-base p font-bold'>{post.userName?.userName}</span>: {post.post}
+                    </div> */}
+                  </div>
+                ))}
+
+                {userShoes.map((shoes, index) => (
+                  <div key={shoes.id} className='bg-white rounded-lg shadow-xl p-8 mb-4' style={{ marginLeft: "10%", width: 'auto', maxWidth: '500px' ,minWidth: '200px'}}>
+                    {/* <div className='text-base font-bold'>{post.userName?.userName}</div> */}
+                    <AliceCarousel>
+                      {shoes.images.map((image, index) => (
+                        <img key={index} src={image} width={'auto'} />
+                      ))}
+                    </AliceCarousel>
+                    {/* <div>
+                      <span className='text-base p font-bold'>{post.userName?.userName}</span>: {post.post}
+                    </div> */}
+                  </div>
+                ))}
+                {userShorts.map((shorts, index) => (
+                  <div key={shorts.id} className='bg-white rounded-lg shadow-xl p-8 mb-4' style={{ marginLeft: "10%", width: 'auto', maxWidth: '500px' ,minWidth: '200px'}}>
+                    {/* <div className='text-base font-bold'>{post.userName?.userName}</div> */}
+                    <AliceCarousel>
+                      {shorts.images.map((image, index) => (
+                        <img key={index} src={image} width={'auto'} />
+                      ))}
+                    </AliceCarousel>
+                    {/* <div>
+                      <span className='text-base p font-bold'>{post.userName?.userName}</span>: {post.post}
+                    </div> */}
+                  </div>
+                ))}
+                {userSocks.map((socks, index) => (
+                  <div key={socks.id} className='bg-white rounded-lg shadow-xl p-8 mb-4' style={{ marginLeft: "10%", width: 'auto', maxWidth: '500px' ,minWidth: '200px'}}>
+                    {/* <div className='text-base font-bold'>{post.userName?.userName}</div> */}
+                    <AliceCarousel>
+                      {socks.images.map((image, index) => (
+                        <img key={index} src={image} width={'auto'} />
+                      ))}
+                    </AliceCarousel>
+                    {/* <div>
+                      <span className='text-base p font-bold'>{post.userName?.userName}</span>: {post.post}
+                    </div> */}
+                  </div>
+                ))}
                 
               </div>
               
