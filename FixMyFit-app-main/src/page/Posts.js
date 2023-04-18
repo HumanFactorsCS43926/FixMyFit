@@ -230,8 +230,10 @@ const Posts = () => {
                   <button  class="show-deletePost-button" onClick={() => deletePost(post.id)}>Delete</button>
                 }</div>
           <AliceCarousel>
-            {post.images.map((image, index) => (
-              <img key={index} src={image} width={'auto'} />
+            {post.images.filter((image) => image !== '') // Filter out empty images
+              .map((image, index) => (
+                <img key={index} src={image} width={'auto'} style={{ marginTop: '10px' }} // Add margin-top style
+                />
             ))}
           </AliceCarousel>
               <button className={post.isLiked ? 'button-like liked' : 'button-like'} onClick={() => updateLikes(post.id, currentUser.uid)}>
