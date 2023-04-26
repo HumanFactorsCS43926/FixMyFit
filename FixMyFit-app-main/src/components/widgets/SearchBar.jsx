@@ -6,9 +6,10 @@ import { updateDoc,serverTimestamp,getDoc,doc, addDoc, collection, onSnapshot, o
 import AliceCarousel from 'react-alice-carousel';
 import { db } from '../../firebase';
 import { getAuth } from 'firebase/auth';
+import Outfit from './Outfit';
 
 const SearchBar = ({placeholder, data}) => { 
-  const [queriedUser, setQueriedUser] = useState(null);
+  const [queriedUser, setQueriedUser] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [userPosts, setUserPosts] = useState([]);
   const [userPants, setUserPants] = useState([]);
@@ -28,8 +29,11 @@ const SearchBar = ({placeholder, data}) => {
   const user = auth.currentUser;
   const [userID, setUserID] = useState('');
 
+  const onDragStart = (event) => {
+    event.dataTransfer.setData("text/plain", event.target.src);
+  }
 
-  function handleSearch (event) {
+  const handleSearch = (event) => {
     event.preventDefault();
     setQueriedUser(searchQuery);
     const collectionRef = collection(db, 'users');
@@ -175,7 +179,6 @@ const SearchBar = ({placeholder, data}) => {
             display: flex;
             width: 100%;
             overflow: hidden;
-            padding-left:25%;
           }
           #user_posts, #user_wardrobe {
             display: inline-block;
@@ -208,7 +211,7 @@ const SearchBar = ({placeholder, data}) => {
                     <AliceCarousel>
                     {post.images.filter((image) => image !== '') // Filter out empty images
               .map((image, index) => (
-                <img key={index} src={image} width={'auto'} style={{ marginTop: '10px' }} // Add margin-top style
+                <img onDragStart={onDragStart} draggable key={index} src={image} width={'auto'} style={{ marginTop: '10px' }} // Add margin-top style
                 />
             ))}
                     </AliceCarousel>
@@ -226,7 +229,7 @@ const SearchBar = ({placeholder, data}) => {
                     {/* <div className='text-base font-bold'>{post.userName?.userName}</div> */}
                     <AliceCarousel>
                   {combinedShirts.filter((image) => image !== '').map((image, index) => (
-                    <img key={index} src={image} width={'auto'} alt={`Shirt ${index}`} className='w-full h-48 object-cover mb-2' />
+                    <img onDragStart={onDragStart} draggable key={index} src={image} width={'auto'} alt={`Shirt ${index}`} className='w-full h-48 object-cover mb-2' />
                   ))}
                 </AliceCarousel>
                     <div>
@@ -239,7 +242,7 @@ const SearchBar = ({placeholder, data}) => {
                     {/* <div className='text-base font-bold'>{post.userName?.userName}</div> */}
                     <AliceCarousel>
                   {combinedPants.filter((image) => image !== '').map((image, index) => (
-                    <img key={index} src={image} alt={`Pant ${index}`} className='w-full h-48 object-cover mb-2' />
+                    <img onDragStart={onDragStart} draggable key={index} src={image} alt={`Pant ${index}`} className='w-full h-48 object-cover mb-2' />
                   ))}
                 </AliceCarousel>
                     <div>
@@ -252,7 +255,7 @@ const SearchBar = ({placeholder, data}) => {
                     {/* <div className='text-base font-bold'>{post.userName?.userName}</div> */}
                     <AliceCarousel>
                   {combinedShorts.filter((image) => image !== '').map((image, index) => (
-                    <img key={index} src={image} alt={`Short ${index}`} className='w-full h-48 object-cover mb-2' />
+                    <img onDragStart={onDragStart} draggable key={index} src={image} alt={`Short ${index}`} className='w-full h-48 object-cover mb-2' />
                   ))}
                 </AliceCarousel>
                     <div>
@@ -265,7 +268,7 @@ const SearchBar = ({placeholder, data}) => {
                     {/* <div className='text-base font-bold'>{post.userName?.userName}</div> */}
                     <AliceCarousel>
                   {combinedSocks.filter((image) => image !== '').map((image, index) => (
-                    <img key={index} src={image} alt={`Sock ${index}`} className='w-full h-48 object-cover mb-2' />
+                    <img onDragStart={onDragStart} draggable key={index} src={image} alt={`Sock ${index}`} className='w-full h-48 object-cover mb-2' />
                   ))}
                 </AliceCarousel>
                     <div>
@@ -278,7 +281,7 @@ const SearchBar = ({placeholder, data}) => {
                     {/* <div className='text-base font-bold'>{post.userName?.userName}</div> */}
                     <AliceCarousel>
                   {combinedShoes.filter((image) => image !== '').map((image, index) => (
-                    <img key={index} src={image} alt={`Shoe ${index}`} className='w-full h-48 object-cover mb-2' />
+                    <img onDragStart={onDragStart} draggable key={index} src={image} alt={`Shoe ${index}`} className='w-full h-48 object-cover mb-2' />
                   ))}
                 </AliceCarousel>
                     <div>
@@ -292,7 +295,7 @@ const SearchBar = ({placeholder, data}) => {
               </div>
               
               <div id='fit_template'>
-
+                <Outfit />
               </div>
           </div>
         

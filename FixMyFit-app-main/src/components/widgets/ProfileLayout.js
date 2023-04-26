@@ -1,4 +1,5 @@
 import Sidebar from './Sidebar';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ProfileLayout = ({ children }) => {
   return (
