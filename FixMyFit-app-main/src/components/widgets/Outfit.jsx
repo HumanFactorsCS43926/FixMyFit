@@ -13,8 +13,10 @@ const Outfit = () => {
     const [images, setImages] = useState([]);
     const [userData, setUserData] = useState(null); // state to store user data
     const postRef = useRef(null);
-    const [selectedImages, setSelectedImages]= useState([]);
-    const [canvasDataURL, setCanvasDataURL] = useState(null);
+
+    useEffect(() => {
+        getUserData();
+      }, [currentUser]);
 
     const getUserData = async () => {
         if (currentUser) {
@@ -32,24 +34,20 @@ const Outfit = () => {
     }
 
     const uploadPost = async (event) => {
-        const canvas = canvasRef.current;
-        // const canvasDataURL = canvas.toDataURL();
-        // const imageBlob = dataURLtoBlob(canvasDataURL);
-        // setSelectedImages([imageBlob]);
-        // if (!userData) {
-        //     console.log("User data is not available yet");
-        //     return;
-        // }
-        // const docRef = await addDoc(collection(db, 'post'), {
-        //     post: postRef.current.value,
-        //     timestamp: serverTimestamp(),
-        //     user: currentUser.uid,
-        //     userName: userData.userName,
-        //     images: selectedImages.map((image) => image.downloadURL),
-        // });
+        if (!userData) {
+            console.log("User data is not available yet");
+            return;
+        }
+        const docRef = await addDoc(collection(db, 'post'), {
+            post: postRef.current.value,
+            timestamp: serverTimestamp(),
+            user: currentUser.uid,
+            userName: userData.userName,
+            images: images.map((image) => image.src),
+        });
         
-        // postRef.current.value='';
-        // setSelectedImages([]);
+        postRef.current.value='';
+        setImages([]);
     }
 
     const onDrop = (event) => {
@@ -57,8 +55,6 @@ const Outfit = () => {
         const imageURL = event.dataTransfer.getData("text/plain");
         const img = new Image();
         img.onload = () => {
-            
-            // context.drawImage(img, 0, 0, 100, 100);
             if (images.length === 0) {
                 setImages([img]);
             } else {

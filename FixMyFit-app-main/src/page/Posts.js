@@ -227,7 +227,7 @@ const Posts = () => {
       {posts.map((post, index) => ( 
         <div key={post.id} className='bg-white rounded-lg shadow-xl p-8   mb-4'style={{ marginLeft: "30%", width: 'auto', maxWidth: '500px' ,minWidth: '200px'}}>
           <div className='text-base font-bold'>{post.userName?.userName}{currentUser.uid === post.user &&
-                  <button  class="show-deletePost-button" onClick={() => deletePost(post.id)}>Delete</button>
+                  <button  className="show-deletePost-button" onClick={() => deletePost(post.id)}>Delete</button>
                 }</div>
           <AliceCarousel>
             {post.images.filter((image) => image !== '') // Filter out empty images
@@ -240,7 +240,7 @@ const Posts = () => {
                 <icon className="fas fa-heart"></icon>  
                 <span>{post.likes}</span>
               </button>
-              <button class="post-button" onClick={() => uploadComment(post.id, index)}>Comment</button>
+              <button className="post-button" onClick={() => uploadComment(post.id, index)}>Comment</button>
           <div>
             <span className='text-base p font-bold'>{post.userName?.userName}</span>: {post.post}
           </div>
@@ -253,7 +253,7 @@ const Posts = () => {
           
 
   
-          <button class="show-comment-button" onClick={() => {
+          <button className="show-comment-button" onClick={() => {
             if (commentSubscriptions[post.id]) {
               // unsubscribe from comments if already subscribed
               commentSubscriptions[post.id]();
@@ -274,7 +274,7 @@ const Posts = () => {
                 <span className='text-base p font-bold'>{comment.username.userName}</span>: {comment.comment}
                 <p className='mt-3 text-xs text-right text-gray-400'>{moment(comment.timestamp).fromNow()}</p>
                 {currentUser.uid === comment.useId &&
-                  <button class="show-delete-button" onClick={() => deleteComment(post.id, comment.id)}>Delete</button>
+                  <button className="show-delete-button" onClick={() => deleteComment(post.id, comment.id)}>Delete</button>
                 }
                 
               </div>
